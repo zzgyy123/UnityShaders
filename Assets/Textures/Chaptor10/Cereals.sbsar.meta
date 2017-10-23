@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a9e8b722b263ca040a4b06d32312dc6f
-timeCreated: 1508321440
+timeCreated: 1508397303
 licenseType: Free
 SubstanceImporter:
   serializedVersion: 5
@@ -223,7 +223,7 @@ SubstanceImporter:
     prototypeName: Cereals
     shaderName: 
     shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-    shaderKeywords: 
+    shaderKeywords: _NORMALMAP _PARALLAXMAP
     renderQueue: -1
     lightmapFlags: 4
     inputs:
@@ -384,12 +384,12 @@ SubstanceImporter:
       - _DetailNormalMapScale: 1
       - _DstBlend: 0
       - _GlossMapScale: 1
-      - _Glossiness: 0.5
+      - _Glossiness: 0.372
       - _GlossyReflections: 1
       - _Metallic: 0
       - _Mode: 0
       - _OcclusionStrength: 1
-      - _Parallax: 0.02
+      - _Parallax: 0.0169
       - _SmoothnessTextureChannel: 0
       - _SpecularHighlights: 1
       - _SrcBlend: 1
