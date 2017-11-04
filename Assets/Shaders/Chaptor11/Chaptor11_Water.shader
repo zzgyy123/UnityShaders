@@ -11,7 +11,7 @@
 	SubShader {
 		// Need to disable batching because of the vertex animation
 		Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" "DisableBatching"="True"}
-	
+		//Tags{"RenderType"="Opaque" "Queue"="Geometry"}
 		
 		Pass {
 			Tags { "LightMode"="ForwardBase" }
