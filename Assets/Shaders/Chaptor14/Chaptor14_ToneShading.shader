@@ -70,9 +70,9 @@ Shader "Unity Shader Boks/Chapter14/Chaptor14_ToneShading"
 			#pragma multi_compile_fwdbase
 
 			#include "UnityCG.cginc"
-			#inlcude "Lighting.cginc"
-			#incldue "AutoLight.cginc"
-			#icnldue "UnityShaderVariables.cginc"
+			#include "Lighting.cginc"
+			#include "AutoLight.cginc"
+			#include "UnityShaderVariables.cginc"
 
 			fixed4 _Color;
 			sampler2D _MainTex;
@@ -83,9 +83,9 @@ Shader "Unity Shader Boks/Chapter14/Chaptor14_ToneShading"
 
 			struct a2v {
 				float4 vertex :POSITION;
-				float3 nromal : NORMAL;
+				float3 normal : NORMAL;
 				float4 texcoord : TEXCOORD0;
-				float4 tangent : TANGENT;
+				//float4 tangent : TANGENT;
 			};
 
 			struct v2f {
@@ -102,7 +102,7 @@ Shader "Unity Shader Boks/Chapter14/Chaptor14_ToneShading"
 				o.uv = TRANSFORM_TEX(v.texcoord,_MainTex);
 
 				o.worldNormal = UnityObjectToWorldNormal(v.normal);
-				o.worldPos = mul(Unity_ObjectToWorld,v.vertex).xyz;
+				o.worldPos = mul(unity_ObjectToWorld,v.vertex).xyz;
 
 				return o;
 			}
@@ -117,16 +117,20 @@ Shader "Unity Shader Boks/Chapter14/Chaptor14_ToneShading"
 				fixed4 c = tex2D(_MainTex,i.uv);
 				fixed3 albedo = c.rgb*_Color.rgb;
 
-				fixed3 ambient = UNTIY_LIGHTMODEL_AMBIENT.xyz * albedo;
+				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz * albedo;
 
 				UNITY_LIGHT_ATTENUATION(atten , i, i.worldPos);
 
 				fixed diff = dot(worldNormal,worldLightDir);
-				diff = (doff*0.5+0.5)*atten;
+				diff = (diff*0.5+0.5)*atten;
 
 				fixed3 diffuse = _LightColor0.rgb*albedo*tex2D(_Ramp,float2(diff,diff)).rgb;
 
 				fixed spec = dot(worldNormal,worldHalfDir);
+				fixed w = fwidth(spec)*2;
+				fixed3 specular = _Specular.rgb * lerp(0,1,smoothstep(-w,w,spec+_SpecularScale-1)*step(0.0001,_SpecularScale));
+
+				return fixed4(ambient+diffuse+specular,1.0);
 			}
 
 			ENDCG
